@@ -1,5 +1,5 @@
 # Plant-Disease-Detection
-A plant disease detection in app made with Flutter and powered by AI.
+A plant disease detection app made with Flutter and powered by AI.
 =======
 
 A new Flutter project.
