@@ -186,7 +186,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                       context,
                                       MaterialPageRoute(
                                         builder: (context) =>
-                                            ForgetPasswordScreen(),
+                                            const ForgetPasswordScreen(),
                                       ),
                                     );
                                   },
@@ -218,7 +218,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => TestScreen(),
+                                      builder: (context) => const TestScreen(),
                                     ),
                                   );
                                 }

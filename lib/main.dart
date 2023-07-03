@@ -3,10 +3,12 @@ import 'package:plant_disease_detection/screens/login_screen.dart';
 import 'package:plant_disease_detection/screens/signup_screen.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -17,8 +19,8 @@ class MyApp extends StatelessWidget {
       ),
       initialRoute: LoginScreen.id,
       routes: {
-        LoginScreen.id: (context) => LoginScreen(),
-        SignupScreen.id: (context) => SignupScreen(),
+        LoginScreen.id: (context) => const LoginScreen(),
+        SignupScreen.id: (context) => const SignupScreen(),
       },
     );
   }

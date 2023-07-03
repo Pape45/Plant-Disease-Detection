@@ -3,9 +3,13 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:plant_disease_detection/components/authentication_button.dart';
 import 'package:plant_disease_detection/components/custom_text_field.dart';
 import 'package:plant_disease_detection/constants.dart';
+import 'package:flutter/services.dart';
+
 
 class ForgetPasswordScreen extends StatelessWidget {
   static const String id = 'ForgetPasswordScreen';
+
+  const ForgetPasswordScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,9 +20,11 @@ class ForgetPasswordScreen extends StatelessWidget {
         children: [
           // First Child in the stack
           ClipPath(
-            clipper: CurveClipper(),
-            child: Container(
-              color: kSpiritedGreen,
+            clipper: ImageClipper(),
+            child: Image.asset(
+              'assets/leaves.jpg',
+              alignment: Alignment.topCenter,
+              fit: BoxFit.fitWidth,
             ),
           ),
 
@@ -116,6 +122,33 @@ class ForgetPasswordScreen extends StatelessWidget {
 }
 
 class CurveClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    var path = Path();
+
+    path.lineTo(0, size.height * 0.30);
+
+    path.quadraticBezierTo(
+      size.width * 0.25,
+      size.height * 0.36,
+      size.width * 0.70,
+      size.height * 0.30,
+    );
+    path.lineTo(size.width, size.height * 0.25);
+
+    path.lineTo(size.width, 0);
+    path.lineTo(0, 0);
+
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(CustomClipper<Path> oldClipper) => false;
+}
+
+class ImageClipper extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     var path = Path();
