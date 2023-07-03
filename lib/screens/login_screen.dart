@@ -6,6 +6,8 @@ import 'package:plant_disease_detection/constants.dart';
 import 'package:plant_disease_detection/screens/signup_screen.dart';
 import 'package:plant_disease_detection/screens/test.dart';
 
+import 'forget_password_screen.dart';
+
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
 
@@ -19,6 +21,7 @@ class _LoginScreenState extends State<LoginScreen> {
   bool rememberMe = false;
   String username = '';
   String password = '';
+  String dropdownValue = 'Utilisateur simple';
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +31,6 @@ class _LoginScreenState extends State<LoginScreen> {
         fit: StackFit.expand,
         children: [
           // First Child in the stack
-
           ClipPath(
             clipper: ImageClipper(),
             child: Image.asset(
@@ -87,7 +89,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               color: kGreyColor,
                               fontSize: 15.0,
                             ),
-                          )
+                          ),
                         ],
                       ),
 
@@ -110,6 +112,41 @@ class _LoginScreenState extends State<LoginScreen> {
                             onChanged: (value) {
                               password = value != '' ? value : '';
                             },
+                          ),
+                          Container(
+                            padding:
+                                const EdgeInsets.symmetric(horizontal: 10.0),
+                            decoration: BoxDecoration(
+                              color: const Color(
+                                  0xFFE5F0EA), // Couleur de fond du dropdown
+                              borderRadius: BorderRadius.circular(
+                                  10.0), // Courbe de bordure
+                            ),
+                            child: DropdownButton<String>(
+                              value: dropdownValue, // Option par défaut
+                              dropdownColor: const Color(
+                                  0xFFE5F0EA), // Couleur de fond du dropdown
+                              style: GoogleFonts.poppins(
+                                color: kDarkGreenColor, // Couleur du texte
+                                fontSize: 15.0,
+                                fontWeight: FontWeight.w600,
+                              ),
+                              items: <String>[
+                                'Utilisateur simple',
+                                'Agriculteur',
+                                'Phytopathologiste',
+                              ].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              onChanged: (newValue) {
+                                setState(() {
+                                  dropdownValue = newValue!;
+                                });
+                              },
+                            ),
                           ),
                           Padding(
                             padding:
@@ -136,19 +173,27 @@ class _LoginScreenState extends State<LoginScreen> {
                                         color: kGreyColor,
                                         fontSize: 14.0,
                                       ),
-                                    )
+                                    ),
                                   ],
                                 ),
                                 TextButton(
-                                  onPressed: () {},
                                   style: ButtonStyle(
                                     foregroundColor: MaterialStateProperty.all(
                                         kDarkGreenColor),
                                   ),
+                                  onPressed: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            ForgetPasswordScreen(),
+                                      ),
+                                    );
+                                  },
                                   child: const Text(
                                     'Mot de passe oublié ?',
                                   ),
-                                )
+                                ),
                               ],
                             ),
                           ),
@@ -169,11 +214,13 @@ class _LoginScreenState extends State<LoginScreen> {
                               label: 'Se connecter',
                               onPressed: () {
                                 if (username.toLowerCase() == 'admin' &&
-                                    password == 'idk123!') {
+                                    password == 'test') {
                                   Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => TestScreen()));
+                                    context,
+                                    MaterialPageRoute(
+                                      builder: (context) => TestScreen(),
+                                    ),
+                                  );
                                 }
                               },
                             ),
@@ -194,16 +241,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     ),
                                     onPressed: () {
                                       Navigator.pushNamed(
-                                          context, SignupScreen.id);
+                                        context,
+                                        SignupScreen.id,
+                                      );
                                     },
                                     child: const Text(
                                       'S\'inscrire',
                                       style: TextStyle(fontSize: 14.0),
                                     ),
-                                  )
+                                  ),
                                 ],
                               ),
-                            )
+                            ),
                           ],
                         ),
                       ),
