@@ -4,8 +4,7 @@ import 'package:plant_disease_detection/components/authentication_button.dart';
 import 'package:plant_disease_detection/components/custom_text_field.dart';
 import 'package:plant_disease_detection/constants.dart';
 import 'package:plant_disease_detection/screens/signup_screen.dart';
-import 'package:plant_disease_detection/screens/test.dart';
-
+import 'package:plant_disease_detection/screens/root_page.dart';
 import 'forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -144,6 +143,7 @@ class _LoginScreenState extends State<LoginScreen> {
                               onChanged: (newValue) {
                                 setState(() {
                                   dropdownValue = newValue!;
+                                  
                                 });
                               },
                             ),
@@ -214,11 +214,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               label: 'Se connecter',
                               onPressed: () {
                                 if (username.toLowerCase() == 'admin' &&
-                                    password == 'test') {
+                                    password == 'test' && dropdownValue == 'Agriculteur') {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(
-                                      builder: (context) => const TestScreen(),
+                                      builder: (context) => const RootPage(),
                                     ),
                                   );
                                 }
