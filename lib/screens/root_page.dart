@@ -5,23 +5,22 @@ import 'package:plant_disease_detection/screens/HomePageFarmer.dart';
 import 'package:plant_disease_detection/screens/profil.dart';
 import 'package:plant_disease_detection/screens/ContactPhyto.dart';
 
-class RootPage extends StatefulWidget{
+class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
 
   @override
   State<RootPage> createState() => _RootPageState();
-
 }
 
-class _RootPageState extends State<RootPage>{
+class _RootPageState extends State<RootPage> {
   bool _showNotification = false;
   int _bottomNavIndex = 0;
   bool _isMenuOpen = false;
 
   List<Widget> Pages = const [
-  HomePageFarmer(),
-  ContactPhyto(),
-  Profil(),
+    HomePageFarmer(),
+    ContactPhyto(),
+    Profil(),
   ];
 
   List<IconData> iconList = [
@@ -57,13 +56,11 @@ class _RootPageState extends State<RootPage>{
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 9.0),
-            child : IconButton(
+            child: IconButton(
               icon: const Icon(Icons.notifications),
               tooltip: 'Notifications',
               onPressed: () {
-                setState(() {
-
-                });
+                setState(() {});
               },
             ),
           ),
@@ -86,22 +83,20 @@ class _RootPageState extends State<RootPage>{
         children: Pages,
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: (){
-
-        },
+        onPressed: () {},
         backgroundColor: Colors.lightGreen[800],
-        child: Image.asset('assets/logoPhoto.png',height: 30.0),
+        child: Image.asset('assets/logoPhoto.png', height: 30.0),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
       bottomNavigationBar: AnimatedBottomNavigationBar(
-        splashColor : Colors.lightGreen[800],
+        splashColor: Colors.lightGreen[800],
         activeColor: Colors.lightGreen[800],
         inactiveColor: Colors.black.withOpacity(.5),
         icons: iconList,
         activeIndex: _bottomNavIndex,
         gapLocation: GapLocation.center,
         notchSmoothness: NotchSmoothness.softEdge,
-        onTap: (index){
+        onTap: (index) {
           setState(() {
             _bottomNavIndex = index;
           });

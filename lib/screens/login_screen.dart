@@ -143,7 +143,6 @@ class _LoginScreenState extends State<LoginScreen> {
                               onChanged: (newValue) {
                                 setState(() {
                                   dropdownValue = newValue!;
-                                  
                                 });
                               },
                             ),
@@ -214,7 +213,8 @@ class _LoginScreenState extends State<LoginScreen> {
                               label: 'Se connecter',
                               onPressed: () {
                                 if (username.toLowerCase() == 'admin' &&
-                                    password == 'test' && dropdownValue == 'Agriculteur') {
+                                    password == 'test' &&
+                                    dropdownValue == 'Agriculteur') {
                                   Navigator.push(
                                     context,
                                     MaterialPageRoute(

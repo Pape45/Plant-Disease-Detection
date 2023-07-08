@@ -18,7 +18,8 @@ class SignupScreen extends StatelessWidget {
             body: SafeArea(
               child: SingleChildScrollView(
                 child: Container(
-                  margin: const EdgeInsets.only(top: 20.0), // Ajout de la marge en haut
+                  margin: const EdgeInsets.only(
+                      top: 20.0), // Ajout de la marge en haut
                   constraints: BoxConstraints(
                     maxHeight: MediaQuery.of(context).size.height * 0.9,
                   ),

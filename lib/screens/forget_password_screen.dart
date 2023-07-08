@@ -4,7 +4,6 @@ import 'package:plant_disease_detection/components/authentication_button.dart';
 import 'package:plant_disease_detection/components/custom_text_field.dart';
 import 'package:plant_disease_detection/constants.dart';
 
-
 class ForgetPasswordScreen extends StatelessWidget {
   static const String id = 'ForgetPasswordScreen';
 
@@ -82,7 +81,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                           ),
                         ],
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 30.0),
                         child: Column(
@@ -98,7 +96,6 @@ class ForgetPasswordScreen extends StatelessWidget {
                           ],
                         ),
                       ),
-
                       Padding(
                         padding: const EdgeInsets.symmetric(horizontal: 40.0),
                         child: AuthenticationButton(
