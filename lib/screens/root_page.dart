@@ -1,9 +1,9 @@
 import 'package:animated_bottom_navigation_bar/animated_bottom_navigation_bar.dart';
 import 'package:flutter/material.dart';
-import 'package:page_transition/page_transition.dart';
 import 'package:plant_disease_detection/screens/HomePageFarmer.dart';
 import 'package:plant_disease_detection/screens/profil.dart';
 import 'package:plant_disease_detection/screens/ContactPhyto.dart';
+import 'package:plant_disease_detection/screens/map_screen.dart';
 
 class RootPage extends StatefulWidget {
   const RootPage({Key? key}) : super(key: key);
@@ -13,12 +13,13 @@ class RootPage extends StatefulWidget {
 }
 
 class _RootPageState extends State<RootPage> {
-  bool _showNotification = false;
+  final bool _showNotification = false;
   int _bottomNavIndex = 0;
   bool _isMenuOpen = false;
 
   List<Widget> Pages = const [
     HomePageFarmer(),
+    MapScreen(),
     ContactPhyto(),
     Profil(),
   ];

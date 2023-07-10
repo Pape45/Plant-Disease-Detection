@@ -22,17 +22,17 @@ class _ProfilState extends State<Profil> {
             children: [
               Container(
                 width: 150,
-                child: const CircleAvatar(
-                  radius: 60,
-                  backgroundColor: Colors.transparent,
-                  backgroundImage: ExactAssetImage('assets/logo2.jpg'),
-                ),
                 decoration: BoxDecoration(
                   shape: BoxShape.circle,
                   border: Border.all(
                     color: Colors.grey.shade300,
                     width: 5.0,
                   ),
+                ),
+                child: const CircleAvatar(
+                  radius: 60,
+                  backgroundColor: Colors.transparent,
+                  backgroundImage: ExactAssetImage('assets/logo2.jpg'),
                 ),
               ),
               SizedBox(

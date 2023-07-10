@@ -5,6 +5,7 @@ import 'package:plant_disease_detection/components/custom_text_field.dart';
 import 'package:plant_disease_detection/constants.dart';
 import 'package:plant_disease_detection/screens/signup_screen.dart';
 import 'package:plant_disease_detection/screens/root_page.dart';
+import 'package:plant_disease_detection/screens/pages-phytopathologist.dart';
 import 'forget_password_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -213,14 +214,24 @@ class _LoginScreenState extends State<LoginScreen> {
                               label: 'Se connecter',
                               onPressed: () {
                                 if (username.toLowerCase() == 'admin' &&
-                                    password == 'test' &&
-                                    dropdownValue == 'Agriculteur') {
-                                  Navigator.push(
-                                    context,
-                                    MaterialPageRoute(
-                                      builder: (context) => const RootPage(),
-                                    ),
-                                  );
+                                    password == 'test') {
+                                  if (dropdownValue == 'Agriculteur') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => const RootPage(),
+                                      ),
+                                    );
+                                  } else if (dropdownValue ==
+                                      'Phytopathologiste') {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) =>
+                                            const PhytopathologistHomePage(),
+                                      ),
+                                    );
+                                  }
                                 }
                               },
                             ),
