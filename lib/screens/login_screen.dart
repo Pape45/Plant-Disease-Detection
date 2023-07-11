@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:mysql1/mysql1.dart';
 import 'package:plant_disease_detection/components/authentication_button.dart';
 import 'package:plant_disease_detection/components/custom_text_field.dart';
 import 'package:plant_disease_detection/constants.dart';
@@ -7,6 +8,7 @@ import 'package:plant_disease_detection/screens/signup_screen.dart';
 import 'package:plant_disease_detection/screens/root_page.dart';
 import 'package:plant_disease_detection/screens/pages-phytopathologist.dart';
 import 'forget_password_screen.dart';
+import 'package:plant_disease_detection/components/connection_bdd.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -24,6 +26,12 @@ class _LoginScreenState extends State<LoginScreen> {
   String dropdownValue = 'Utilisateur simple';
 
   @override
+  void initState() {
+    super.initState();
+    DBConnection.connect();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Material(
       child: Stack(
@@ -39,7 +47,6 @@ class _LoginScreenState extends State<LoginScreen> {
               fit: BoxFit.fitWidth,
             ),
           ),
-
           Positioned(
             top: 30.0,
             left: 20.0,
@@ -56,7 +63,6 @@ class _LoginScreenState extends State<LoginScreen> {
               ),
             ),
           ),
-
           // Second Child in the stack
           Positioned(
             height: MediaQuery.of(context).size.height * 0.67,
@@ -92,12 +98,11 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       // Second Column
                       Column(
                         children: [
                           CustomTextField(
-                            hintText: 'Login',
+                            hintText: 'Login ou Email',
                             icon: Icons.person,
                             keyboardType: TextInputType.name,
                             onChanged: (value) {
@@ -117,17 +122,14 @@ class _LoginScreenState extends State<LoginScreen> {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 10.0),
                             decoration: BoxDecoration(
-                              color: const Color(
-                                  0xFFE5F0EA), // Couleur de fond du dropdown
-                              borderRadius: BorderRadius.circular(
-                                  10.0), // Courbe de bordure
+                              color: const Color(0xFFE5F0EA),
+                              borderRadius: BorderRadius.circular(10.0),
                             ),
                             child: DropdownButton<String>(
-                              value: dropdownValue, // Option par défaut
-                              dropdownColor: const Color(
-                                  0xFFE5F0EA), // Couleur de fond du dropdown
+                              value: dropdownValue,
+                              dropdownColor: const Color(0xFFE5F0EA),
                               style: GoogleFonts.poppins(
-                                color: kDarkGreenColor, // Couleur du texte
+                                color: kDarkGreenColor,
                                 fontSize: 15.0,
                                 fontWeight: FontWeight.w600,
                               ),
@@ -199,7 +201,6 @@ class _LoginScreenState extends State<LoginScreen> {
                           ),
                         ],
                       ),
-
                       // Third Column
                       Padding(
                         padding: const EdgeInsets.only(
@@ -212,26 +213,137 @@ class _LoginScreenState extends State<LoginScreen> {
                           children: [
                             AuthenticationButton(
                               label: 'Se connecter',
-                              onPressed: () {
-                                if (username.toLowerCase() == 'admin' &&
-                                    password == 'test') {
-                                  if (dropdownValue == 'Agriculteur') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) => const RootPage(),
-                                      ),
-                                    );
-                                  } else if (dropdownValue ==
-                                      'Phytopathologiste') {
-                                    Navigator.push(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            const PhytopathologistHomePage(),
+                              onPressed: () async {
+                                MySqlConnection connection =
+                                    DBConnection.connection;
+
+                                // Vérification des informations de connexion dans la base de données
+                                String query =
+                                    'SELECT * FROM Utilisateur WHERE login = ? OR mail = ?';
+                                var result = await connection
+                                    .query(query, [username, username]);
+
+                                if (result.isNotEmpty) {
+                                  var user = result.first;
+                                  String storedPassword = user['motDePasse'];
+                                  String userType = dropdownValue;
+
+                                  if (password == storedPassword) {
+                                    if (userType == 'Utilisateur simple') {
+                                      // Redirection vers la page pour l'utilisateur simple
+                                      Navigator.push(
+                                        context,
+                                        MaterialPageRoute(
+                                          builder: (context) =>
+                                              const RootPage(),
+                                        ),
+                                      );
+                                    } else if (userType == 'Agriculteur') {
+                                      // Vérification supplémentaire dans la table Agriculteur
+                                      query =
+                                          'SELECT * FROM Agriculteur WHERE idUtilisateur = ?';
+                                      var agriculteurResult = await connection
+                                          .query(
+                                              query, [user['idUtilisateur']]);
+
+                                      if (agriculteurResult.isNotEmpty) {
+                                        // Redirection vers la page pour l'agriculteur
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => RootPage(),
+                                          ),
+                                        );
+                                      } else {
+                                        // Utilisateur sélectionné n'est pas un agriculteur
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: Text('Erreur'),
+                                            content: Text(
+                                                'L\'utilisateur sélectionné n\'est pas un agriculteur.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    } else if (userType ==
+                                        'Phytopathologiste') {
+                                      // Vérification supplémentaire dans la table Phytopathologiste
+                                      query =
+                                          'SELECT * FROM Phytopathologiste WHERE idUtilisateur = ?';
+                                      var phytopathologisteResult =
+                                          await connection.query(
+                                              query, [user['idUtilisateur']]);
+
+                                      if (phytopathologisteResult.isNotEmpty) {
+                                        // Redirection vers la page pour le phytopathologiste
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) =>
+                                                const PhytopathologistHomePage(),
+                                          ),
+                                        );
+                                      } else {
+                                        // Utilisateur sélectionné n'est pas un phytopathologiste
+                                        showDialog(
+                                          context: context,
+                                          builder: (context) => AlertDialog(
+                                            title: Text('Erreur'),
+                                            content: Text(
+                                                'L\'utilisateur sélectionné n\'est pas un phytopathologiste.'),
+                                            actions: [
+                                              TextButton(
+                                                onPressed: () =>
+                                                    Navigator.pop(context),
+                                                child: Text('OK'),
+                                              ),
+                                            ],
+                                          ),
+                                        );
+                                      }
+                                    }
+                                  } else {
+                                    // Mot de passe incorrect
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                        title: Text('Erreur'),
+                                        content:
+                                            Text('Mot de passe incorrect.'),
+                                        actions: [
+                                          TextButton(
+                                            onPressed: () =>
+                                                Navigator.pop(context),
+                                            child: Text('OK'),
+                                          ),
+                                        ],
                                       ),
                                     );
                                   }
+                                } else {
+                                  // Login ou email incorrect
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('Erreur'),
+                                      content:
+                                          Text('Login ou e-mail incorrect.'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () =>
+                                              Navigator.pop(context),
+                                          child: Text('OK'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
                                 }
                               },
                             ),

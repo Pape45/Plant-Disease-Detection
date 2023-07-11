@@ -78,10 +78,6 @@ class PhytopathologistHomePage extends StatelessWidget {
               'Bienvenue',
               style: TextStyle(fontSize: 24),
             ),
-            const Text(
-              'Mame Ndella',
-              style: TextStyle(fontSize: 24),
-            ),
             const SizedBox(height: 30),
             ElevatedButton(
               onPressed: () {
