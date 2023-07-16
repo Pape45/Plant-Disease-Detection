@@ -13,7 +13,7 @@ class _HomePageFarmerState extends State<HomePageFarmer> {
     // TODO: implement build
     int selectedIndex = 1;
     Size size = MediaQuery.of(context).size;
-    final List<Champ> champs = [
+   /* final List<Champ> champs = [
       Champ(
         name: 'Mon premier champ',
         photoUrl: 'assets/Arbre.jpg',
@@ -23,6 +23,7 @@ class _HomePageFarmerState extends State<HomePageFarmer> {
         photoUrl: 'assets/plus.jpg',
       ),
     ];
+    */
     return Scaffold(
       body: SingleChildScrollView(
         child: Column(
@@ -47,18 +48,30 @@ class _HomePageFarmerState extends State<HomePageFarmer> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(
-                          Icons.search,
+                          Icons.no_backpack,
                           color: Colors.black54.withOpacity(.6),
                         ),
-                        const Expanded(
-                            child: TextField(
-                          showCursor: false,
-                          decoration: InputDecoration(
-                            hintText: ' Rechercher une maladie',
-                            border: InputBorder.none,
-                            focusedBorder: InputBorder.none,
+                        Expanded(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Text(
+                                'Bienvenue',
+                                style: TextStyle(
+                                  fontSize: 24,
+                                  fontWeight: FontWeight.bold,
+                                  color: Colors.green.shade900,
+                                ),
+                              ),
+                              Container(
+                                width: 200,
+                                height: 200,
+                                child: Image.asset('assets/images/k2.jpg'),
+                              ),
+                            ],
                           ),
-                        )),
+                        ),
+
                       ],
                     ),
                   ),
@@ -94,36 +107,10 @@ class _HomePageFarmerState extends State<HomePageFarmer> {
                       width: 300,
                       margin: const EdgeInsets.symmetric(horizontal: 10),
                       decoration: BoxDecoration(
-                        color: Colors.green[800],
+                        color: Colors.transparent,
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      child: Stack(
-                        children: [
-                          Positioned(
-                            left: 30,
-                            right: 30,
-                            top: 50,
-                            bottom: 50,
-                            child: Image.asset(champs[index].photoUrl),
-                          ),
-                          Positioned(
-                            bottom: 15,
-                            left: 20,
-                            child: Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  champs[index].name,
-                                  style: const TextStyle(
-                                    color: Colors.white70,
-                                    fontSize: 16,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ],
-                      ),
+
                     );
                   }),
             ),
@@ -134,12 +121,3 @@ class _HomePageFarmerState extends State<HomePageFarmer> {
   }
 }
 
-class Champ {
-  final String name;
-  final String photoUrl;
-
-  Champ({
-    required this.name,
-    required this.photoUrl,
-  });
-}

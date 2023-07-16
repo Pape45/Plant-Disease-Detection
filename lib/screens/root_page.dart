@@ -50,31 +50,42 @@ class _RootPageState extends State<RootPage> {
               child: Image.asset('assets/logo2.jpg'),
             ),
             const SizedBox(width: 2),
-            const Text('AgriFarm'),
+            Text(
+              'AgriFarm',
+              style: TextStyle(
+                color: Colors.black, // Couleur du texte en noir
+              ),
+            ),
           ],
         ),
         backgroundColor: Colors.white,
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.only(right: 9.0),
-            child: IconButton(
-              icon: const Icon(Icons.notifications),
-              tooltip: 'Notifications',
-              onPressed: () {
-                setState(() {});
-              },
+            child: IconTheme(
+              data: IconThemeData(color: Colors.black), // Couleur de l'icône en noir
+              child: IconButton(
+                icon: const Icon(Icons.notifications),
+                tooltip: 'Notifications',
+                onPressed: () {
+                  setState(() {});
+                },
+              ),
             ),
           ),
           Padding(
             padding: const EdgeInsets.only(right: 16.0),
-            child: IconButton(
-              icon: Icon(_isMenuOpen ? Icons.close : Icons.menu),
-              tooltip: 'Menu',
-              onPressed: () {
-                setState(() {
-                  _isMenuOpen = !_isMenuOpen;
-                });
-              },
+            child: IconTheme(
+              data: IconThemeData(color: Colors.black), // Couleur de l'icône en noir
+              child: IconButton(
+                icon: Icon(_isMenuOpen ? Icons.close : Icons.menu),
+                tooltip: 'Menu',
+                onPressed: () {
+                  setState(() {
+                    _isMenuOpen = !_isMenuOpen;
+                  });
+                },
+              ),
             ),
           ),
         ],

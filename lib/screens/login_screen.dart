@@ -9,6 +9,7 @@ import 'package:plant_disease_detection/screens/root_page.dart';
 import 'package:plant_disease_detection/screens/pages-phytopathologist.dart';
 import 'forget_password_screen.dart';
 import 'package:plant_disease_detection/components/connection_bdd.dart';
+import 'package:plant_disease_detection/interface_utlisateur/root_page2.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -235,7 +236,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                         context,
                                         MaterialPageRoute(
                                           builder: (context) =>
-                                              const RootPage(),
+                                              const RootPage2(),
                                         ),
                                       );
                                     } else if (userType == 'Agriculteur') {
